@@ -21,11 +21,6 @@ passport.use(new GoogleStrategy({
         callbackURL: config.CALLBACK_URL
     },
     function (accessToken, refreshToken, profile, cb) {
-        // googleProfile = {
-        //     id: profile.id,
-        //     displayName: profile.displayName
-        // };
-
         googleProfile = Object.assign(profile);
         cb(null, profile);
     }
@@ -50,7 +45,6 @@ app.get('/logged', (req, res) => {
         res.render('logged', {user: googleProfile});
     } else {
         showError (req.url, res);
-        
     }
 });
 
@@ -61,21 +55,13 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/info', (req, res) => {
-    console.log(req.isAuthenticated())
     if(googleProfile) {
-
         res.render('info', {user: googleProfile});
     } else {
         showError (req.url, res);
     }
 });
 
-
-// app.get('/error', (req, res) => {
-//     let url = requestFromUrl;
-//     requestFromUrl =null;
-//     res.render('error', {url: url});
-// });
 
 /********* passport routes */
 app.get('/auth/google',
