@@ -1,0 +1,11 @@
+doctype html
+html
+    head
+        title Restricted area
+        link(rel='stylesheet', href='/static/style.css')
+    body
+        div.container.error
+            h1.container-header Restricted area
+            p.container-description You dont't have permission to site #[strong '/logged']  Please log in.
+            
+            a.login-button(href='/auth/google') Log in!

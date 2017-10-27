@@ -1,0 +1,25 @@
+{
+  "name": "zadanie-17.7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achromik/Zadanie-17.7.git"
+  },
+  "author": "Aleksander Chromik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/achromik/Zadanie-17.7/issues"
+  },
+  "homepage": "https://github.com/achromik/Zadanie-17.7#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}
