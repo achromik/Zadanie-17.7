@@ -9,9 +9,9 @@ html
             p email: #[span.info-user_email #{user.emails[0].value}]
             p Gender:  
                 if (user.gender === 'male')
-                    img.info-user_gender(src='https://www.shareicon.net/data/128x128/2015/08/16/86013_male_512x512.png')
+                    img.info-user_gender(src='/static/img/male.png')
                 else if(user.gender === 'female')
-                    img.info-user_gender(src='https://www.shareicon.net/data/128x128/2015/08/15/85463_female_512x512.png')
+                    img.info-user_gender(src='/static/img/female.png')
                 else
                     | unknown
             img.info-user_image(src=user.photos[0].value.slice(0,-2)+'250')    
