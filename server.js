@@ -46,11 +46,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/logged', (req, res) => {
-    console.log()
     if(googleProfile) {
         res.render('logged', {user: googleProfile});
     } else {
-        res.redirect('/error');
+        showError (req.url, res);
+        
     }
 });
 
@@ -60,10 +60,22 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/info', (req, res) => {
+    console.log(req.isAuthenticated())
+    if(googleProfile) {
 
-app.get('/error', (req, res) => {
-    res.render('error');
+        res.render('info', {user: googleProfile});
+    } else {
+        showError (req.url, res);
+    }
 });
+
+
+// app.get('/error', (req, res) => {
+//     let url = requestFromUrl;
+//     requestFromUrl =null;
+//     res.render('error', {url: url});
+// });
 
 /********* passport routes */
 app.get('/auth/google',
@@ -79,9 +91,16 @@ app.get('/auth/google/callback',
     })
 );
 
-app.use((req, res, next) => {
-    res.redirect('/logged');
-})
+app.use((req, res, next) => { 
+    if(googleProfile) {
+        res.render('logged', {user: googleProfile});
+    } else {
+        showError (req.url, res);
+    }
+});
 
 app.listen(3000);
 
+function showError (url, res) {
+    res.render('error', {url: url});
+}

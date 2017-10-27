@@ -6,6 +6,6 @@ html
     body
         div.container.error
             h1.container-header Restricted area
-            p.container-description You dont't have permission to site #[strong '/logged']  Please log in.
+            p.container-description You dont't have permission to site #[strong #{url}]  Please log in.
             
             a.login-button(href='/auth/google') Log in!
