@@ -65,7 +65,6 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/info', (req, res) => {
-
     if(req.isAuthenticated()) {
         res.render('info', {user: req.session.passport.user});
     } else {
