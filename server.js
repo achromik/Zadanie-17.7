@@ -33,7 +33,7 @@ app.use('/static', express.static("assets"))
 
 //set cookies-session
 app.use(cookieSession({
-    name: 'session',
+    name: 'magicApp',
     keys: config.COOKIE_KEYS ,
     maxAge:  10 * 60 * 100 // 10minutes (in milisecoonds)
 }))
@@ -44,7 +44,11 @@ app.use(passport.session());
 
 /*********** app routes */
 app.get('/', (req, res) => {
-    res.render('index');
+    if(req.isAuthenticated()) {
+        res.redirect('/logged');   
+    } else {    
+        res.render('index');
+    }
 });
 
 app.get('/logged', (req, res) => {
@@ -61,7 +65,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/info', (req, res) => {
-    console.log(req.isAuthenticated());
+
     if(req.isAuthenticated()) {
         res.render('info', {user: req.session.passport.user});
     } else {
@@ -72,7 +76,8 @@ app.get('/info', (req, res) => {
 /********* passport routes */
 app.get('/auth/google',
     passport.authenticate('google', {
-        scope: ['profile', 'email']
+        scope: ['profile', 'email'],
+        prompt: 'select_account'
     })
 );
 
