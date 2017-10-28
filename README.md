@@ -1,6 +1,6 @@
 # Authentciation basen on Google OAuth2.0
 
-### Branch **cookie-session** - authenticate version with cookies-session 
+### Branch *cookie-session* - authenticate version with cookies-session 
 
 - **/** - login site
 - **/error** - info about missing privileges when user go to any url without log in
