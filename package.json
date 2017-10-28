@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/achromik/Zadanie-17.7#readme",
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",

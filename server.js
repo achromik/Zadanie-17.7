@@ -2,8 +2,8 @@ const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const config = require('./config');
+var cookieSession = require('cookie-session')
 const app = express();
-let googleProfile ;
 
 
 /************** start settings for Passport */
@@ -11,8 +11,8 @@ passport.serializeUser((user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
 
 passport.use(new GoogleStrategy({
@@ -21,7 +21,6 @@ passport.use(new GoogleStrategy({
         callbackURL: config.CALLBACK_URL
     },
     function (accessToken, refreshToken, profile, cb) {
-        googleProfile = Object.assign(profile);
         cb(null, profile);
     }
 ));
@@ -30,38 +29,45 @@ passport.use(new GoogleStrategy({
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use('/static', express.static("assets"))
+
+
+//set cookies-session
+app.use(cookieSession({
+    name: 'session',
+    keys: config.COOKIE_KEYS ,
+    maxAge:  10 * 60 * 100 // 10minutes (in milisecoonds)
+}))
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 /*********** app routes */
 app.get('/', (req, res) => {
-     
-    res.render('index', {user: req.user});
+    res.render('index');
 });
 
 app.get('/logged', (req, res) => {
-    if(googleProfile) {
-        res.render('logged', {user: googleProfile});
+    if(req.isAuthenticated()) {
+        res.render('logged', {user: req.session.passport.user});
     } else {
         showError (req.url, res);
     }
 });
 
 app.get('/logout', (req, res) => {
-    googleProfile = null;
     req.logOut();
     res.redirect('/');
 });
 
 app.get('/info', (req, res) => {
-    if(googleProfile) {
-        res.render('info', {user: googleProfile});
+    console.log(req.isAuthenticated());
+    if(req.isAuthenticated()) {
+        res.render('info', {user: req.session.passport.user});
     } else {
         showError (req.url, res);
     }
 });
-
 
 /********* passport routes */
 app.get('/auth/google',
@@ -78,8 +84,8 @@ app.get('/auth/google/callback',
 );
 
 app.use((req, res, next) => { 
-    if(googleProfile) {
-        res.render('logged', {user: googleProfile});
+    if(req.isAuthenticated()) {
+        res.render('logged', {user: req.session.passport.user});
     } else {
         showError (req.url, res);
     }
