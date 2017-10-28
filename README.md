@@ -1,4 +1,4 @@
-# Authentciation basen on Google OAuth2.0
+# Authentication basen on Google OAuth2.0
 
 ### Branch *cookie-session* - authenticate version with cookies-session 
 
